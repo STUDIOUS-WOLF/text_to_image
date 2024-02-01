@@ -70,7 +70,7 @@ const App = () => {
             {singleImageUrl !== "No image URL found in the output." ? (
               <img
                 src={singleImageUrl}
-                alt={`Generated Image ${index + 1}`}
+                alt={`Generated ${index + 1}`}
                 style={{ maxWidth: "100%" }}
               />
             ) : (
