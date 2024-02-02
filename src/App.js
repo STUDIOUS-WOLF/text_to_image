@@ -1,12 +1,17 @@
 import React, { useState } from "react";
 import axios from "axios";
+import EditImageForm from "./components/EditImageForm";
+import GenerateImageForm from "./components/GenerateImageForm";
+import ImageDisplay from "./components/ImageDisplay";
+import "./App.css";
 const App = () => {
-  const [prompt, setPrompt] = useState("");
-  const [editPrompt, setEditPrompt] = useState("");
+  // const [prompt, setPrompt] = useState("");
+  // const [editPrompt, setEditPrompt] = useState("");
   const [imageUrl, setImageUrl] = useState([]);
   const [editImageUrl, setEditImageUrl] = useState([]);
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  // const handleSubmit = async (event) => {
+  const handleGenerateImage = async (prompt) => {
+    // event.preventDefault();
     const apiKey = process.env.REACT_APP_API_KEY;
     try {
       console.log("API Key:", apiKey);
@@ -50,8 +55,9 @@ const App = () => {
 
   // this is for editing previously generated image
 
-  const handleEditImage = async (event) => {
-    event.preventDefault();
+  // const handleEditImage = async (event) => {
+  const handleEditImage = async (editPrompt) => {
+    // event.preventDefault();
     const apiKey = process.env.REACT_APP_API_KEY;
     const prevImageUrl = imageUrl[0];
     try {
@@ -94,67 +100,16 @@ const App = () => {
   };
 
   return (
-    <div>
+    <div className="container">
       <h1>Text to Image Converter</h1>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="prompt">Enter Prompt:</label>
-        <input
-          type="text"
-          id="prompt"
-          name="prompt"
-          value={prompt}
-          onChange={(e) => setPrompt(e.target.value)}
-          required
-        />
-        <button type="submit">Generate Image</button>
-      </form>
-      {imageUrl.length > 0 &&
-        imageUrl.map((singleImageUrl, index) => (
-          <div key={index}>
-            <p>Generated Image {index + 1}:</p>
-            {singleImageUrl !== "No image URL found in the output." ? (
-              <img
-                src={singleImageUrl}
-                alt={`Generated ${index + 1}`}
-                style={{ maxWidth: "100%" }}
-              />
-            ) : (
-              <p>{singleImageUrl}</p>
-            )}
-          </div>
-        ))}
-      {imageUrl.length > 0 && (
-        <div>
-          <form onSubmit={handleEditImage}>
-            <label htmlFor="prompt">Enter Prompt:</label>
-            <input
-              type="text"
-              id="prompt"
-              name="prompt"
-              value={editPrompt}
-              onChange={(e) => setEditPrompt(e.target.value)}
-              required
-            />
-            <button type="submit">Edit Image</button>
-          </form>
-        </div>
-      )}
 
-      {editImageUrl.length > 0 &&
-        editImageUrl.map((singleImageUrl, index) => (
-          <div key={index}>
-            <p>Generated Image {index + 1}:</p>
-            {singleImageUrl !== "No image URL found in the output." ? (
-              <img
-                src={singleImageUrl}
-                alt={`Generated ${index + 1}`}
-                style={{ maxWidth: "100%" }}
-              />
-            ) : (
-              <p>{singleImageUrl}</p>
-            )}
-          </div>
-        ))}
+      <GenerateImageForm onGenerateImage={handleGenerateImage} />
+
+      <ImageDisplay images={imageUrl} title="Generated Image" />
+
+      {imageUrl.length > 0 && <EditImageForm onEditImage={handleEditImage} />}
+
+      <ImageDisplay images={editImageUrl} title="Edited Image" />
     </div>
   );
 };
