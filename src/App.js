@@ -36,8 +36,7 @@ const App = () => {
       const outputUrls = result.output || [];
 
       if (outputUrls.length > 0) {
-        const imageUrl = outputUrls; // Assuming there is only one image URL
-        // const imageUrl = outputUrls[0]; // Assuming there is only one image URL
+        const imageUrl = outputUrls;
 
         setImageUrl(imageUrl);
       } else {
