@@ -23,7 +23,7 @@ const App = () => {
           prompt: prompt,
           width: "512",
           height: "512",
-          samples: "2",
+          samples: "1",
           num_inference_steps: "20",
           guidance_scale: 7.5,
           safety_checker: "yes",
